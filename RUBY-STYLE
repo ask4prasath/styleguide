@@ -1,4 +1,5 @@
-= Christian Neukirchen's Ruby Style Guide
+= Greg Campbell's Ruby Style Guide
+(orig. Christian Neukirchen, modifications from Dan Kubb)
 
 You may not like all rules presented here, but they work very well for
 me and have helped producing high quality code.  Everyone is free to
