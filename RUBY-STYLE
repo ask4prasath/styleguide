@@ -20,10 +20,7 @@ when you contribute to my code, please follow these rules:
 
 * No spaces after (, [ and before ], ).
 
-* Use two spaces before statement modifiers (postfix
-  if/unless/while/until/rescue).
-
-* Indent when as deep as case.
+* Indent `when` as deep as `case`.
 
 * Use an empty line before the return value of a method (unless it
   only has one line), and an empty line between defs.
@@ -35,7 +32,7 @@ when you contribute to my code, please follow these rules:
 
 * Keep lines fewer than 80 characters.
 
-* Avoid trailing whitespace.
+* Strip trailing whitespace.
 
 
 == Syntax:
@@ -44,9 +41,9 @@ when you contribute to my code, please follow these rules:
 
 * Never use for, unless you exactly know why.
 
-* Never use then.
+* Never use then, except in case statements.
 
-* Use when x; ... for one-line cases.
+* Use when x then ... for one-line cases.
 
 * Use &&/|| for boolean expressions, and/or for control flow.  (Rule
   of thumb: If you have to use outer parentheses, you are using the
@@ -61,11 +58,8 @@ when you contribute to my code, please follow these rules:
     x = Math.sin(y)
     array.delete e
 
-* Prefer {...} over do...end.  Multiline {...} is fine: having
-  different statement endings (} for blocks, end for if/while/...)
-  makes it easier to see what ends where.  But use do...end for
-  "control flow" and "method definitions" (e.g. in Rakefiles and
-  certain DSLs.)  Avoid do...end when chaining.
+* Use {...} when defining blocks on one line. Use do...end for multiline
+  blocks.
 
 * Avoid return where not required.
 
@@ -111,15 +105,18 @@ when you contribute to my code, please follow these rules:
 
   And in general, the first letter of the class name if all objects
   are of that type.
-
-* Use _ or names prefixed with _ for unused variables.
-
 * When using inject with short blocks, name the arguments |a, e|
   (mnemonic: accumulator, element)
 
+* Use consistent variable names. Try to keep the variable names close
+  to the object class name.
+
+* Use names prefixed with _ for unused variables.
+
 * When defining binary operators, name the argument "other".
 
-* Prefer map over collect, find over detect, find_all over select,
+=======
+* Prefer map over collect, detect over find, select over find_all,
   size over length.
 
 
@@ -133,8 +130,6 @@ when you contribute to my code, please follow these rules:
 
 == The rest:
 
-* Write ruby -w safe code.
-
 * Avoid hashes-as-optional-parameters.  Does the method do too much?
 
 * Avoid long methods.
@@ -147,17 +142,37 @@ when you contribute to my code, please follow these rules:
 
 * Avoid alias when alias_method will do.
 
+* Always freeze objects assigned to constants.
+
 * Use OptionParser for parsing complex command line options and
   ruby -s for trivial command line options.
 
-* Write for 1.8, but avoid doing things you know that will break in 1.9.
+* Write for 1.9, but avoid doing things you know that will break in 1.8.
 
 * Avoid needless metaprogramming.
 
+* Only give a method one purpose for existing. If you pass in a boolean
+  to a method, what you're saying is that this method has two different
+  behaviours. Just split it into two single purpose methods. If you have
+  to use the words "AND" or "OR" to describe what the method does it
+  probably does too much.
+
+* If sections of a method are logically separate by blank lines, then
+  that's probably a sign that those sections should be split into separate
+  methods.
+
+* Try to keep methods at no more than 10 lines long, and preferably
+  5 or less.
 
 == General:
 
 * Code in a functional way, avoid mutation when it makes sense.
+
+* Try to have methods either return the state of the object and have
+  no side effects, or return self and have side effects. This is
+  otherwise known as Command-query separation (CQS):
+
+    http://en.wikipedia.org/wiki/Command-query_separation
 
 * Do not mutate arguments unless that is the purpose of the method.
 
